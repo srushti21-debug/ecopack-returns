@@ -1,24 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "EcoPack – Packaging Return & Recycling Management" },
+      {
+        name: "description",
+        content:
+          "EcoPack helps customers return used e-commerce packaging so it can be reused or recycled. Schedule a return, track it, and cut packaging waste.",
+      },
+      { property: "og:title", content: "EcoPack – Return. Reuse. Recycle." },
+      {
+        property: "og:description",
+        content:
+          "A packaging return and recycling management system for e-commerce. Return used boxes, track your impact, reduce waste.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+// The deliverable is the plain static site in /public/site (HTML + CSS + JS only,
+// copy it straight into /var/www/html/). This route just previews it.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <iframe
+      src="/site/index.html"
+      title="EcoPack static website preview"
+      className="h-screen w-screen border-0"
+    />
   );
 }
